@@ -1,12 +1,12 @@
-import Category from "./components/Category.jsx";
-import Pages from "./pages/Pages.jsx";
+import Navbar from "./components/Navbar";
+
 import { BrowserRouter } from "react-router-dom";
 
 function App() {
 	return (
 		<div>
 			<BrowserRouter>
-				<Category />
+				<Navbar />
 			</BrowserRouter>
 		</div>
 	);
