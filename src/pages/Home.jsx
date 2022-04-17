@@ -13,11 +13,18 @@ const Container = styled.div`
 		#171717 url(${secondaryBackground}) top left repeat;
 `;
 
+const TopNav = styled.div`
+	margin: auto;
+	max-width: 75%;
+`;
+
 function Home() {
 	return (
 		<Container>
-			<Navbar />
-			<SearchBar />
+			<TopNav>
+				<Navbar />
+				<SearchBar />
+			</TopNav>
 		</Container>
 	);
 }
