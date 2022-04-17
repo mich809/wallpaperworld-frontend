@@ -1,4 +1,4 @@
-import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 
 import { BrowserRouter } from "react-router-dom";
 
@@ -6,7 +6,7 @@ function App() {
 	return (
 		<div>
 			<BrowserRouter>
-				<Navbar />
+				<Home />
 			</BrowserRouter>
 		</div>
 	);
