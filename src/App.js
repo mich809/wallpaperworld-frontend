@@ -1,10 +1,13 @@
-import Pages from "./pages/Pages";
+import Category from "./components/Category.jsx";
+import Pages from "./pages/Pages.jsx";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
 	return (
 		<div>
-			<h1>Hello</h1>
-			<Pages />
+			<BrowserRouter>
+				<Category />
+			</BrowserRouter>
 		</div>
 	);
 }
