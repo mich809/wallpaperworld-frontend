@@ -1,5 +1,6 @@
-import Navbar from "../components/Navbar";
-import SearchBar from "../components/SearchBar";
+import Navbar from "../components/Home/Navbar";
+import SearchBar from "../components/Home/SearchBar";
+import FeatureRow from "../components/Home/FeatureRow";
 import styled from "styled-components";
 import primaryBackground from "../assets/blue-gradients.020-wh.jpg";
 import secondaryBackground from "../assets/bg-dark-grain.png";
@@ -15,7 +16,8 @@ const Container = styled.div`
 
 const TopNav = styled.div`
 	margin: auto;
-	max-width: 75%;
+	text-align: center;
+	max-width: 1560px;
 `;
 
 function Home() {
@@ -25,6 +27,7 @@ function Home() {
 				<Navbar />
 				<SearchBar />
 			</TopNav>
+			<FeatureRow />
 		</Container>
 	);
 }
