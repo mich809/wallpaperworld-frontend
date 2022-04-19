@@ -115,6 +115,9 @@ function SearchNavBar() {
 			<div>
 				<ul>
 					<StyledItem color="#ad3">
+						<a href="/#">Home</a>
+					</StyledItem>
+					<StyledItem color="#ad3">
 						<a href="/#">Latest</a>
 					</StyledItem>
 					<StyledItem color="#b760f0">
