@@ -1,8 +1,6 @@
-
+import SearchNavBar from "../components/Commons/SearchNavBar";
 const Upload = () => {
-  return (
-    <div>Upload</div>
-  )
-}
+	return <SearchNavBar />;
+};
 
-export default Upload
+export default Upload;

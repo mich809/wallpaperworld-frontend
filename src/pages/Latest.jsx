@@ -1,9 +1,7 @@
-
+import SearchNavBar from "../components/Commons/SearchNavBar";
 
 const Latest = () => {
-  return (
-    <div>Latest</div>
-  )
-}
+	return <SearchNavBar />;
+};
 
-export default Latest
+export default Latest;

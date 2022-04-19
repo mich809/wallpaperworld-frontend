@@ -1,9 +1,7 @@
-
+import SearchNavBar from "../components/Commons/SearchNavBar";
 
 const TopList = () => {
-  return (
-    <div>Top</div>
-  )
-}
+	return <SearchNavBar />;
+};
 
-export default TopList
+export default TopList;

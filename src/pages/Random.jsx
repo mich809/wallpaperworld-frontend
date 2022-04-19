@@ -1,9 +1,7 @@
-
+import SearchNavBar from "../components/Commons/SearchNavBar";
 
 function Random() {
-  return (
-    <div>Random</div>
-  )
+	return <SearchNavBar />;
 }
 
-export default Random
+export default Random;
