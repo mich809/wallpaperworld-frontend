@@ -1,14 +1,14 @@
-import React from "react";
 import styled from "styled-components";
 import { getRandomPictures } from "../../utils/PictureApi";
 import { useState, useEffect } from "react";
+import Picture from "../Commons/Picture";
 
 const FeatureContainer = styled.div`
 	max-width: 1560px;
 	margin: auto;
 `;
 
-const FirstRow = styled.div`
+const PictureRow = styled.div`
 	justify-content: center;
 	max-width: 1560px;
 	display: inline-flex;
@@ -16,18 +16,6 @@ const FirstRow = styled.div`
 
 	span {
 		padding: 2px 6px;
-	}
-
-	img {
-		max-width: 100%;
-		border-radius: 5px;
-		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-		transition: 0.25s;
-		width: 350px;
-		height: 200px;
-	}
-	img:hover {
-		filter: brightness(150%);
 	}
 `;
 
@@ -59,22 +47,51 @@ const SecondRow = styled.div`
 	}
 `;
 
-function FeatRow(props) {
+const StatsRow = styled.div`
+	padding: 0px 60px;
+	margin: 2em auto;
+	display: flex;
+	justify-content: space-between;
+	align-content: stretch;
+	align-items: flex-start;
+
+	div {
+		padding: 1em;
+		text-align: left;
+		background: rgba(0, 0, 0, 0.2);
+		width: 45%;
+	}
+
+	h3 {
+		margin: 0;
+		padding: 0;
+		line-height: 2em;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		color: #fff;
+		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+	}
+	p {
+		margin: 1em 0;
+		color: #fff;
+	}
+`;
+
+function FeatRow({ pics, nums }) {
 	return (
 		<>
-			{props.pics.slice(0, 4).map((picture) => (
-				<FirstRow key={picture.id}>
+			{pics.slice(nums[0], nums[1]).map((picture) => (
+				<PictureRow key={picture.id}>
 					<span>
 						<a href="/#">
-							<img src={picture.pictureUrl} alt="" />
+							<Picture src={picture.pictureUrl} alt="" />
 						</a>
 					</span>
-				</FirstRow>
+				</PictureRow>
 			))}
 		</>
 	);
 }
-function StartPageRow() {
+function SignUpRow() {
 	return (
 		<SecondRow>
 			<p>New here?</p>
@@ -85,11 +102,34 @@ function StartPageRow() {
 	);
 }
 
-// function MoreFeat() {}
+function Stats() {
+	return (
+		<StatsRow>
+			<div>
+				<h3>WallPaperWorld Stats</h3>
+				<p>
+					{" "}
+					WallPaperWorld is home to <strong>929,075</strong> high quality
+					wallpapers which have been viewed a total of{" "}
+					<strong>2.43 billion</strong> times!{" "}
+				</p>
+				<p>
+					{" "}
+					We have <strong>771,162</strong> awesome users.
+				</p>
+				<p>
+					{" "}
+					Not sure what to search for? We're sure at least one of our{" "}
+					<strong>76,013</strong> user created tags will help you find
+					something!{" "}
+				</p>
+			</div>
+		</StatsRow>
+	);
+}
 
 function FeatureRow() {
 	const [pictures, setPictures] = useState([]);
-
 	useEffect(() => {
 		let mounted = true;
 		getRandomPictures().then((items) => {
@@ -102,8 +142,10 @@ function FeatureRow() {
 
 	return (
 		<FeatureContainer>
-			<FeatRow pics={pictures} />
-			<StartPageRow></StartPageRow>
+			<FeatRow pics={pictures} nums={[0, 4]} />
+			<SignUpRow></SignUpRow>
+			<FeatRow pics={pictures} nums={[4, pictures.length]} />
+			<Stats />
 		</FeatureContainer>
 	);
 }
