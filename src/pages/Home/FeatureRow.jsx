@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { getRandomPictures } from "../../utils/PictureApi";
+import { getHomePictures } from "../../utils/PictureApi";
 import { useState, useEffect } from "react";
 import Picture from "../../components/Commons/Picture";
+import { Link } from "react-router-dom";
 
 const FeatureContainer = styled.div`
 	max-width: 1560px;
@@ -82,9 +83,9 @@ function FeatRow({ pics, nums }) {
 			{pics.slice(nums[0], nums[1]).map((picture) => (
 				<PictureRow key={picture.id}>
 					<span>
-						<a href="/#">
+						<Link to={`wallpaper/${picture.pictureName}`}>
 							<Picture src={picture.pictureUrl} alt="" />
-						</a>
+						</Link>
 					</span>
 				</PictureRow>
 			))}
@@ -96,7 +97,8 @@ function SignUpRow() {
 		<SecondRow>
 			<p>New here?</p>
 			<p>
-				<a href="/#">Create a new account!</a> - or - <a href="/#">Log in</a>
+				<a href="/register">Create a new account!</a> - or -{" "}
+				<a href="/login">Log in</a>
 			</p>
 		</SecondRow>
 	);
@@ -130,14 +132,11 @@ function Stats() {
 
 function FeatureRow() {
 	const [pictures, setPictures] = useState([]);
+
 	useEffect(() => {
-		let mounted = true;
-		getRandomPictures().then((items) => {
-			if (mounted) {
-				setPictures(items);
-			}
+		getHomePictures().then((pics) => {
+			setPictures(pics);
 		});
-		return () => (mounted = false);
 	}, []);
 
 	return (
