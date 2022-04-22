@@ -114,23 +114,23 @@ function SearchNavBar() {
 		<StyledHeader>
 			<div>
 				<ul>
-					<StyledItem color="#ad3">
-						<a href="/#">Home</a>
+					<StyledItem color="#ddd">
+						<a href="/">𝕎𝕒𝕝𝕝ℙ𝕒𝕡𝕖𝕣𝕎𝕠𝕣𝕝𝕕</a>
 					</StyledItem>
 					<StyledItem color="#ad3">
-						<a href="/#">Latest</a>
+						<a href="/latest">Latest</a>
 					</StyledItem>
 					<StyledItem color="#b760f0">
 						{" "}
-						<a href="/#">TopList</a>
+						<a href="/toplist">TopList</a>
 					</StyledItem>
 					<StyledItem color="#e73">
 						{" "}
-						<a href="/#">Random</a>
+						<a href="/random">Random</a>
 					</StyledItem>
 					<StyledItem color="#d55">
 						{" "}
-						<a href="/#">Upload</a>
+						<a href="/upload">Upload</a>
 					</StyledItem>
 				</ul>
 			</div>
@@ -141,10 +141,10 @@ function SearchNavBar() {
 			</FormStyle>
 
 			<UserPanel>
-				<StyledAnchor href="/#" Backgroundcolor="#d55" Textcolor="#ddd">
+				<StyledAnchor href="/register" Backgroundcolor="#d55" Textcolor="#ddd">
 					Register
 				</StyledAnchor>
-				<StyledAnchor href="/#" Backgroundcolor="#204650" Textcolor="#ddd">
+				<StyledAnchor href="/login" Backgroundcolor="#204650" Textcolor="#ddd">
 					Login
 				</StyledAnchor>
 			</UserPanel>
