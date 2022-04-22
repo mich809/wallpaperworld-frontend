@@ -1,14 +1,25 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8080/api/picture";
+axios.defaults.baseURL = "http://localhost:8080";
 axios.defaults.headers.common["Authorization"] = localStorage.getItem("jwt");
 
-export const getRandomPictures = async () =>
+export const getHomePictures = async () =>
 	await axios
-		.get("/getRandomPictures")
+		.get("/api/picture/homePictures")
+		.then(function (response) {
+			console.log(response.data);
+			return response.data;
+		})
+		.catch(function (error) {
+			console.log(error.response.data);
+		});
+
+export const getPictureDetails = async (pictureName) =>
+	await axios
+		.get("/api/picture/getPictureDetails", { params: { title: pictureName } })
 		.then(function (response) {
 			return response.data;
 		})
 		.catch(function (error) {
-			console.log(error);
+			console.log(error.response.data);
 		});
