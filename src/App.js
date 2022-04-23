@@ -5,6 +5,7 @@ import TopList from "./pages/TopList";
 import Upload from "./pages/Upload";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Search from "./pages/Search";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Wallpaper from "./pages/Wallpaper";
@@ -20,6 +21,7 @@ function App() {
 				<Route path="/register" element={<Register />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/wallpaper/:id" element={<Wallpaper />} />
+				<Route path="/search/:tag" element={<Search />} />
 				<Route path="/" element={<Home />} />
 			</Routes>
 		</BrowserRouter>
