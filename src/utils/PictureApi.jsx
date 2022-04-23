@@ -7,7 +7,6 @@ export const getHomePictures = async () =>
 	await axios
 		.get("/api/picture/homePictures")
 		.then(function (response) {
-			console.log(response.data);
 			return response.data;
 		})
 		.catch(function (error) {
@@ -17,6 +16,18 @@ export const getHomePictures = async () =>
 export const getPictureDetails = async (pictureName) =>
 	await axios
 		.get("/api/picture/getPictureDetails", { params: { title: pictureName } })
+		.then(function (response) {
+			return response.data;
+		})
+		.catch(function (error) {
+			console.log(error.response.data);
+		});
+
+export const getPicturesByTag = async (tag) =>
+	await axios
+		.get("/api/picture/getPicturesByTag", {
+			params: { tags: tag, pageNumber: 0 },
+		})
 		.then(function (response) {
 			return response.data;
 		})
