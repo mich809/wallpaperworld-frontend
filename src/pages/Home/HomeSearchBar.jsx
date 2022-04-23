@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-// import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const FormStyle = styled.form`
 	margin: 1em auto 1em auto;
@@ -29,10 +29,14 @@ const FormStyle = styled.form`
 `;
 
 function SearchBar() {
-	const [input, setInput] = useState("");
+	let navigate = useNavigate();
+
 	const submitHandler = (e) => {
 		e.preventDefault();
+		navigate("/search/" + input);
 	};
+
+	const [input, setInput] = useState("");
 
 	return (
 		<FormStyle onSubmit={submitHandler}>
