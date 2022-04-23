@@ -4,6 +4,17 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getPictureDetails } from "../utils/PictureApi";
 
+const TagItem = styled.li`
+	color: #94db94;
+	text-align: center;
+	margin: 0 4px 4px 0;
+	padding: 0.3em;
+	background-color: #293033;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 8px 0;
+`;
+
 const Sidebar = styled.aside`
 	background-color: #1b1b1b;
 	border-color: #292929;
@@ -16,28 +27,40 @@ const Sidebar = styled.aside`
 	width: 20em;
 
 	.sidebar-content {
-		margin-right: -17px;
 		height: 100%;
-		padding: 1em 2em;
+		padding: 0em 2em;
 		text-shadow: 0 1px 1px #000;
 
 		.sidebar-section {
 			position: relative;
 			margin-top: 1em;
 			padding: 1em 0;
-			font-size: 0.9em;
-			text-align: center;
+			font-size: 1.4em;
 			h2 {
-				margin: 0 0 1em;
-				padding: 0;
-				font-size: 0.85em;
-				line-height: 1.52941176em;
 				text-transform: uppercase;
-				border: 0 none;
 				text-align: left;
-				font-weight: 700;
 				color: #8cc;
-				font-size: 1.2em;
+				border-bottom: 1px dotted #333;
+			}
+
+			ul {
+				list-style-type: none;
+				padding-top: 5px;
+				text-align: center;
+
+				span {
+					color: #85aaaf;
+				}
+
+				li {
+					line-height: 2em;
+					display: flex;
+
+					p {
+						color: #dddddd;
+						padding-left: 1em;
+					}
+				}
 			}
 		}
 	}
@@ -70,10 +93,12 @@ const Showcase = styled.div`
 const Wallpaper = () => {
 	let picName = useParams();
 	const [picture, setPicture] = useState({});
+	const [Tag, setTags] = useState([]);
 
 	useEffect(() => {
 		getPictureDetails(picName["id"]).then((pic) => {
 			setPicture(pic);
+			setTags(pic.tags);
 		});
 	}, []);
 
@@ -84,12 +109,31 @@ const Wallpaper = () => {
 				<div className="sidebar-content" style={{}}>
 					<div className="sidebar-section">
 						<h2>Tags</h2>
-						<ul></ul>
+						<ul
+							style={{
+								display: "flex",
+								alignItems: "center",
+								alignContent: "center",
+								flexWrap: "wrap",
+							}}
+						>
+							{Tag.map((tag, index) => (
+								<TagItem key={index}>
+									<a href="/#">{tag}</a>
+								</TagItem>
+							))}
+						</ul>
 						<h2>Properties</h2>
 						<ul>
-							<li>Uploader</li>
-							<li>Views </li>
-							<li>Favorites</li>
+							<li>
+								<span>Uploader </span> <p>{picture.uploadedBy}</p>
+							</li>
+							<li>
+								<span>Views</span> <p>{picture.viewCount}</p>
+							</li>
+							<li>
+								<span>Favorites</span> <p>{picture.favorites}</p>
+							</li>
 						</ul>
 					</div>
 				</div>
