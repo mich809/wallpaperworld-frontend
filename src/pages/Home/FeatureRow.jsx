@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { getHomePictures } from "../../utils/PictureApi";
 import { useState, useEffect } from "react";
 import Picture from "../../components/Commons/Picture";
-import { Link } from "react-router-dom";
 
 const FeatureContainer = styled.div`
 	max-width: 1560px;
@@ -83,9 +82,11 @@ function FeatRow({ pics, nums }) {
 			{pics.slice(nums[0], nums[1]).map((picture) => (
 				<PictureRow key={picture.id}>
 					<span>
-						<Link to={`wallpaper/${picture.pictureName}`}>
-							<Picture src={picture.pictureUrl} alt="" />
-						</Link>
+						<Picture
+							src={picture.pictureUrl}
+							url={picture.pictureName}
+							alt=""
+						/>
 					</span>
 				</PictureRow>
 			))}

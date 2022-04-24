@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPicturesByTag } from "../utils/PictureApi";
 import { Container } from "../styles/style";
+import { BsSearch } from "react-icons/bs";
 
 function Search() {
 	let { tag } = useParams();
@@ -15,7 +16,7 @@ function Search() {
 			setPictures(pics.content);
 			setAmout(pics.totalElements);
 		});
-	}, []);
+	});
 
 	return (
 		<>
@@ -23,6 +24,8 @@ function Search() {
 			<Container>
 				<header>
 					<h1>
+						{" "}
+						<BsSearch style={{ margin: "20 20 0 25", fontSize: "1.5em" }} />
 						{amount} wallpapers found for "
 						<span style={{ color: "#49f" }}>{tag}</span>"
 					</h1>
@@ -31,9 +34,11 @@ function Search() {
 					<section>
 						<ul>
 							{pictures.map((picture, index) => (
-								<li key={index} style={{ display: "inline-block", padding: 5 }}>
-									<Picture src={picture.pictureUrl}></Picture>
-								</li>
+								<Picture
+									src={picture.pictureUrl}
+									url={picture.pictureName}
+									alt=""
+								/>
 							))}
 						</ul>
 					</section>

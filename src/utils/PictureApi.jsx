@@ -34,3 +34,23 @@ export const getPicturesByTag = async (tag) =>
 		.catch(function (error) {
 			console.log(error.response.data);
 		});
+
+export const getRandomPictures = async () =>
+	await axios
+		.get("/api/picture/getRandomPictures", { params: { pageNumber: 0 } })
+		.then(function (response) {
+			return response.data;
+		})
+		.catch(function (error) {
+			console.log(error.response.data);
+		});
+
+export const getLatestPictures = async () =>
+	await axios
+		.get("/api/picture/getPicturesByDate", { params: { pageNumber: 0 } })
+		.then(function (response) {
+			return response.data;
+		})
+		.catch(function (error) {
+			console.log(error.response.data);
+		});

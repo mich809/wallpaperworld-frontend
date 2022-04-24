@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Pic = styled.img`
 	max-width: 100%;
@@ -13,7 +14,13 @@ const Pic = styled.img`
 `;
 
 function Picture(props) {
-	return <Pic src={props.src} alt=""></Pic>;
+	return (
+		<>
+			<Link to={`/wallpaper/${props.url}`}>
+				<Pic src={props.src} alt=""></Pic>
+			</Link>
+		</>
+	);
 }
 
 export default Picture;
