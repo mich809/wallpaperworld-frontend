@@ -1,7 +1,9 @@
 import SearchNavBar from "../components/Commons/SearchNavBar";
 import styled from "styled-components";
 import { useState } from "react";
-import { BiLogInCircle } from "react-icons/bi";
+
+import { login } from "../utils/UserApi";
+import { useForm } from "react-hook-form";
 
 const Main = styled.main`
 	min-height: 100vh;
@@ -70,23 +72,19 @@ const Base = styled.div`
 `;
 
 function Login() {
-	const [user, setUser] = useState({
-		username: "",
-		password: "",
-	});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 
-	function handleUserName(event) {
-		setUser({ ...user, username: event.target.value });
-	}
-
-	function handlePassword(event) {
-		setUser({ ...user, password: event.target.value });
-	}
-
-	function handleSubmit(event) {
-		event.preventDefault();
-		console.log(user);
-	}
+	const onSubmit = (user) => {
+		login(user).then((response) => {
+			if (response) {
+				console.log(response);
+			} else console.log("no");
+		});
+	};
 
 	return (
 		<>
@@ -97,25 +95,37 @@ function Login() {
 						<h1>Welcome Back.</h1>
 					</div>
 					<div className="authPanel">
-						<form action="" onSubmit={handleSubmit.bind(this)}>
+						<form onSubmit={handleSubmit(onSubmit)}>
 							<input
 								type="text"
 								placeholder="Username"
-								required
-								onChange={handleUserName.bind(this)}
-							></input>
+								{...register("username", {
+									required: true,
+									min: 3,
+									maxLength: 15,
+								})}
+							/>
+							{errors.username && (
+								<span style={{ color: "red", paddingLeft: "0.5em" }}>
+									Username is required
+								</span>
+							)}
 							<input
 								type="password"
 								placeholder="Password"
-								required
-								onChange={handlePassword.bind(this)}
-							></input>
+								{...register("password", {
+									required: true,
+									min: 4,
+									maxLength: 100,
+								})}
+							/>
+							{errors.password && (
+								<span style={{ color: "red", paddingLeft: "0.5em" }}>
+									Password is required
+								</span>
+							)}
 
-							<button type="submit">
-								{" "}
-								<BiLogInCircle style={{ fontSize: "1.5em" }} />
-								Login
-							</button>
+							<button type="submit">Login</button>
 						</form>
 					</div>
 				</Base>
