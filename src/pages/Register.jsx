@@ -1,8 +1,7 @@
 import SearchNavBar from "../components/Commons/SearchNavBar";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { IoMdCheckmark } from "react-icons/io";
 import { registerUser } from "../utils/UserApi";
+import { useForm } from "react-hook-form";
 
 const Main = styled.main`
 	min-height: 100vh;
@@ -48,7 +47,7 @@ const Base = styled.div`
 		width: 50%;
 
 		input {
-			color: white;
+			color: #ddd;
 			width: 85%;
 			font-size: 1.4em;
 			margin: 0.5em;
@@ -57,19 +56,14 @@ const Base = styled.div`
 			border-radius: 2px;
 			box-shadow: inset 0 0 0.75em rgba(255, 255, 255, 0.03), 0 2px 0 #222,
 				0 3px 4px -3px #000, 0 1px 2px rgba(0, 0, 0, 0.2);
+
+			:focus {
+				background-color: #ddd;
+				color: #313131;
+			}
 		}
 
-		button {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			border-radius: 2px;
-			margin: 0.6em;
-			padding: 0.5em;
-			width: 85%;
-
-			font-size: 1.3em;
-			text-shadow: none;
+		.SubmitBtn {
 			background-image: radial-gradient(
 				100% 100% at 0 bottom,
 				#31751d 0,
@@ -77,38 +71,25 @@ const Base = styled.div`
 			);
 			color: #000;
 			cursor: pointer;
+
+			:hover {
+				border: 1px #31751d solid;
+			}
 		}
 	}
 `;
 
 function Register() {
-	const [user, setUser] = useState({
-		username: "",
-		password: "",
-	});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 
-	// let errors = {};
-
-	// function validate() {
-	// 	let isValid = true;
-
-	// 	if (user["password"] !== user["confirmPassword"]) {
-	// 		isValid = false;
-	// 		errors["password"] = "Passwords don't match.";
-	// 	}
-
-	// 	return isValid;
-	// }
-
-	function handleChange(event) {
-		user[event.target.name] = event.target.value;
-		setUser(user);
-	}
-
-	function handleSubmit(event) {
-		// event.preventDefault();
-		// registerUser(user);
-	}
+	const onSubmit = (user) => {
+		console.log(user);
+		registerUser(user);
+	};
 
 	return (
 		<>
@@ -124,33 +105,37 @@ function Register() {
 						</ul>
 					</div>
 					<div className="authPanel">
-						<form action="" onSubmit={handleSubmit.bind(this)}>
+						<form onSubmit={handleSubmit(onSubmit)}>
 							<input
 								type="text"
 								placeholder="Username"
-								name="username"
-								required
-								onChange={handleChange.bind(this)}
-							></input>
+								{...register("username", {
+									required: true,
+									min: 3,
+									maxLength: 15,
+								})}
+							/>
+							{errors.username && (
+								<span style={{ color: "red", paddingLeft: "0.5em" }}>
+									Username is required
+								</span>
+							)}
 							<input
 								type="password"
 								placeholder="Password"
-								name="password"
-								required
-								onChange={handleChange.bind(this)}
-							></input>
-							{/* <input
-								type="password"
-								placeholder="Password(confirm)"
-								required
-								name="confirmPassword"
-								onChange={handleChange.bind(this)}
-							></input> */}
+								{...register("password", {
+									required: true,
+									min: 4,
+									maxLength: 100,
+								})}
+							/>
+							{errors.password && (
+								<span style={{ color: "red", paddingLeft: "0.5em" }}>
+									Password is required
+								</span>
+							)}
 
-							<button type="submit">
-								<IoMdCheckmark style={{ fontSize: "1.3em" }} />
-								Register
-							</button>
+							<input type="submit" className="SubmitBtn" />
 						</form>
 					</div>
 				</Base>
