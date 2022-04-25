@@ -10,14 +10,18 @@ export const registerUser = async (user) =>
 			console.log(error + "status code: " + error.res);
 		});
 
-export const login = async () =>
+export const login = async (user) =>
 	await axios
-		.post("/api/user/login", { username: "react51", password: "password" })
+		.post("/api/user/login", {
+			username: user.username,
+			password: user.password,
+		})
 		.then(function (response) {
 			localStorage.setItem("jwt", response.data["jwt"]);
+			return response.status;
 		})
-		.catch(function (error) {
-			console.log(error + "status code: " + error.res);
+		.catch((err) => {
+			console.log(err);
 		});
 
 export const addToFavorites = async () =>
@@ -28,7 +32,7 @@ export const addToFavorites = async () =>
 		})
 		.then(function (response) {})
 		.catch(function (error) {
-			console.log(error + "status code: " + error.res);
+			return error;
 		});
 
 export const removeFromFavorites = async (pictureID) =>
