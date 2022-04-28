@@ -1,9 +1,8 @@
 import SearchNavBar from "../components/Commons/SearchNavBar";
 import styled from "styled-components";
-import { useState } from "react";
-
 import { login } from "../utils/UserApi";
-import { useForm } from "react-hook-form";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "../context/UseAuth";
 
 const Main = styled.main`
 	min-height: 100vh;
@@ -37,6 +36,12 @@ const Base = styled.div`
 		padding: 1em;
 		display: flex;
 		width: 50%;
+		text-align: center;
+		flex-direction: column;
+
+		.errorMessage {
+			color: red;
+		}
 
 		input {
 			color: white;
@@ -51,9 +56,6 @@ const Base = styled.div`
 		}
 
 		button {
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			border-radius: 2px;
 			margin: 0.6em;
 			padding: 0.5em;
@@ -72,18 +74,35 @@ const Base = styled.div`
 `;
 
 function Login() {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm();
+	const { SetLoggedIn } = useAuth();
 
-	const onSubmit = (user) => {
-		login(user).then((response) => {
-			if (response) {
+	const userRef = useRef();
+	const errRef = useRef();
+
+	const [user, setUser] = useState("");
+	const [password, setPassword] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
+	// const [success, setSuccess] = useState(false);
+
+	useEffect(() => {
+		userRef.current.focus();
+	}, []);
+
+	useEffect(() => {
+		setErrorMessage("");
+	}, [user, password]);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		login({ username: user, password: password })
+			.then((response) => {
 				console.log(response);
-			} else console.log("no");
-		});
+				SetLoggedIn(true);
+			})
+			.catch((err) => {
+				console.log(err);
+				setErrorMessage("Something went wrong! try again!");
+			});
 	};
 
 	return (
@@ -95,37 +114,41 @@ function Login() {
 						<h1>Welcome Back.</h1>
 					</div>
 					<div className="authPanel">
-						<form onSubmit={handleSubmit(onSubmit)}>
+						<p
+							ref={errRef}
+							className={errorMessage ? "errorMessage" : "offscreen"}
+						>
+							{errorMessage}
+						</p>
+
+						<form onSubmit={handleSubmit}>
 							<input
 								type="text"
-								placeholder="Username"
-								{...register("username", {
-									required: true,
-									min: 3,
-									maxLength: 15,
-								})}
+								id="username"
+								ref={userRef}
+								autoComplete="off"
+								onChange={(e) => setUser(e.target.value)}
+								value={user}
+								placeholder="username"
+								required
 							/>
-							{errors.username && (
-								<span style={{ color: "red", paddingLeft: "0.5em" }}>
-									Username is required
-								</span>
-							)}
+
 							<input
 								type="password"
-								placeholder="Password"
-								{...register("password", {
-									required: true,
-									min: 4,
-									maxLength: 100,
-								})}
+								id="password"
+								onChange={(e) => setPassword(e.target.value)}
+								value={password}
+								required
+								placeholder="password"
 							/>
-							{errors.password && (
-								<span style={{ color: "red", paddingLeft: "0.5em" }}>
-									Password is required
-								</span>
-							)}
-
-							<button type="submit">Login</button>
+							<button>Sign In</button>
+							<p style={{ color: "#ddd" }}>
+								Need an Account?
+								<br />
+								<a href="/register" style={{ color: "#6495ED" }}>
+									Sign Up
+								</a>
+							</p>
 						</form>
 					</div>
 				</Base>
