@@ -42,7 +42,6 @@ const Main = styled.main`
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 const Upload = () => {
 	const [file, setFile] = useState([]);
-	console.log(file[0]);
 
 	return (
 		<>
