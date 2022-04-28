@@ -1,28 +1,13 @@
 import axios from "axios";
 
 export const registerUser = async (user) =>
-	await axios
-		.post("/api/user/register", user)
-		.then(function (response) {
-			console.log(response.data);
-		})
-		.catch(function (error) {
-			console.log(error + "status code: " + error.res);
-		});
+	await axios.post("/api/user/register", user);
 
 export const login = async (user) =>
-	await axios
-		.post("/api/user/login", {
-			username: user.username,
-			password: user.password,
-		})
-		.then(function (response) {
-			localStorage.setItem("jwt", response.data["jwt"]);
-			return response.status;
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	await axios.post("/api/user/login", {
+		username: user.username,
+		password: user.password,
+	});
 
 export const addToFavorites = async () =>
 	await axios
