@@ -9,16 +9,12 @@ export const login = async (user) =>
 		password: user.password,
 	});
 
-export const addToFavorites = async () =>
-	await axios
-		.put("/api/user/AddToFavorites", {
-			username: "react51",
-			password: "password",
-		})
-		.then(function (response) {})
-		.catch(function (error) {
-			return error;
-		});
+export const addToFavorites = async (picture) =>
+	await axios.put(
+		"/api/user/AddToFavorites",
+		{ pictureName: picture },
+		{ headers: { Authorization: "Bearer " + localStorage.getItem("token") } }
+	);
 
 export const removeFromFavorites = async (pictureID) =>
 	await axios
