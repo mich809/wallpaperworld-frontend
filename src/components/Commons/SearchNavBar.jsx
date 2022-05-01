@@ -110,6 +110,11 @@ const UserPanel = styled.div`
 `;
 
 function SearchNavBar() {
+	function logout() {
+		localStorage.removeItem("user");
+		localStorage.removeItem("token");
+	}
+
 	return (
 		<StyledHeader>
 			<div>
@@ -141,12 +146,43 @@ function SearchNavBar() {
 			</FormStyle>
 
 			<UserPanel>
-				<StyledAnchor href="/register" Backgroundcolor="#d55" Textcolor="#ddd">
-					Register
-				</StyledAnchor>
-				<StyledAnchor href="/login" Backgroundcolor="#204650" Textcolor="#ddd">
-					Login
-				</StyledAnchor>
+				{!localStorage.getItem("user") && (
+					<StyledAnchor
+						href="/register"
+						Backgroundcolor="#d55"
+						Textcolor="#ddd"
+					>
+						Register
+					</StyledAnchor>
+				)}
+				{!localStorage.getItem("user") && (
+					<StyledAnchor
+						href="/login"
+						Backgroundcolor="#204650"
+						Textcolor="#ddd"
+					>
+						Login
+					</StyledAnchor>
+				)}
+				{localStorage.getItem("user") && (
+					<StyledAnchor
+						href="/profile"
+						Backgroundcolor="#204650"
+						Textcolor="#ddd"
+					>
+						Profile
+					</StyledAnchor>
+				)}
+				{localStorage.getItem("user") && (
+					<StyledAnchor
+						href="/login"
+						Backgroundcolor="#204650"
+						Textcolor="#ddd"
+						onClick={logout}
+					>
+						logout
+					</StyledAnchor>
+				)}
 			</UserPanel>
 		</StyledHeader>
 	);
