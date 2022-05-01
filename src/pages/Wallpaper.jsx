@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getPictureDetails } from "../utils/PictureApi";
-
+import { addToFavorites } from "../utils/UserApi";
+import { Link } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
 const TagItem = styled.li`
 	color: #94db94;
 	text-align: center;
@@ -31,11 +33,41 @@ const Sidebar = styled.aside`
 		padding: 0em 2em;
 		text-shadow: 0 1px 1px #000;
 
+		button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 2px;
+			margin: 0.6em;
+			padding: 0.8em;
+			width: 85%;
+			font-size: 1.3em;
+			text-shadow: none;
+			color: red;
+			cursor: pointer;
+			background-color: #171717;
+
+			box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+			text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+
+			svg {
+				color: white;
+			}
+
+			:hover {
+				svg {
+					color: red;
+					font-size: 1.2em;
+				}
+			}
+		}
+
 		.sidebar-section {
 			position: relative;
 			margin-top: 1em;
 			padding: 1em 0;
 			font-size: 1.4em;
+
 			h2 {
 				text-transform: uppercase;
 				text-align: left;
@@ -100,7 +132,17 @@ const Wallpaper = () => {
 			setPicture(pic);
 			setTags(pic.tags);
 		});
-	}, []);
+	}, [picName]);
+
+	const favoritePicture = () => {
+		addToFavorites(picName["id"])
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	return (
 		<>
@@ -119,7 +161,7 @@ const Wallpaper = () => {
 						>
 							{Tag.map((tag, index) => (
 								<TagItem key={index}>
-									<a href="/#">{tag}</a>
+									<Link to="/#">{tag}</Link>
 								</TagItem>
 							))}
 						</ul>
@@ -136,6 +178,12 @@ const Wallpaper = () => {
 							</li>
 						</ul>
 					</div>
+					{localStorage.getItem("user") && (
+						<button onClick={favoritePicture}>
+							<FaHeart style={{ marginRight: "0.4em" }} />
+							Add to favorites
+						</button>
+					)}
 				</div>
 			</Sidebar>
 			<Showcase>
