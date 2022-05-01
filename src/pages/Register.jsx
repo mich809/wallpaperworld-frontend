@@ -2,6 +2,7 @@ import SearchNavBar from "../components/Commons/SearchNavBar";
 import styled from "styled-components";
 import { registerUser } from "../utils/UserApi";
 import { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const StyledSection = styled.section`
 	min-height: 100vh;
@@ -213,7 +214,7 @@ function Register() {
 							<h1>You have succesfully registered.</h1>
 							<p>
 								<button>
-									<a href="/login">Sign In</a>
+									<Link to="/login">Sign In</Link>
 								</button>
 							</p>
 						</section>
