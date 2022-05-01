@@ -1,7 +1,7 @@
 import SearchNavBar from "../components/Commons/SearchNavBar";
 import styled from "styled-components";
 import React, { useState } from "react";
-import { FilePond, File, registerPlugin } from "react-filepond";
+import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -40,6 +40,7 @@ const Main = styled.main`
 `;
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
 const Upload = () => {
 	const [file, setFile] = useState([]);
 
@@ -64,12 +65,11 @@ const Upload = () => {
 								process: {
 									url: "http://localhost:8080/api/picture/addPicture",
 									headers: {
-										Authorization: "Bearer " + localStorage.getItem("jwt"),
+										Authorization: "Bearer " + localStorage.getItem("token"),
 									},
 									ondata: (formData) => {
 										formData.append("file", file);
 										formData.append("tags", "batman");
-										console.log(localStorage.getItem("jwt"));
 										return formData;
 									},
 								},
