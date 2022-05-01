@@ -2,7 +2,8 @@ import SearchNavBar from "../components/Commons/SearchNavBar";
 import styled from "styled-components";
 import { login } from "../utils/UserApi";
 import { useRef, useState, useEffect } from "react";
-import useAuth from "../context/UseAuth";
+
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const Main = styled.main`
 	min-height: 100vh;
@@ -74,15 +75,16 @@ const Base = styled.div`
 `;
 
 function Login() {
-	const { SetLoggedIn } = useAuth();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const from = location.state?.from?.pathname || "/";
 
 	const userRef = useRef();
 	const errRef = useRef();
 
-	const [user, setUser] = useState("");
+	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
-	// const [success, setSuccess] = useState(false);
 
 	useEffect(() => {
 		userRef.current.focus();
@@ -90,14 +92,15 @@ function Login() {
 
 	useEffect(() => {
 		setErrorMessage("");
-	}, [user, password]);
+	}, [username, password]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		login({ username: user, password: password })
+		login({ username: username, password: password })
 			.then((response) => {
-				console.log(response);
-				SetLoggedIn(true);
+				localStorage.setItem("token", response.data.jwt);
+				localStorage.setItem("user", username);
+				navigate(from, { replace: true });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -127,8 +130,8 @@ function Login() {
 								id="username"
 								ref={userRef}
 								autoComplete="off"
-								onChange={(e) => setUser(e.target.value)}
-								value={user}
+								onChange={(e) => setUserName(e.target.value)}
+								value={username}
 								placeholder="username"
 								required
 							/>
@@ -145,9 +148,9 @@ function Login() {
 							<p style={{ color: "#ddd" }}>
 								Need an Account?
 								<br />
-								<a href="/register" style={{ color: "#6495ED" }}>
+								<Link to="/register" style={{ color: "#6495ED" }}>
 									Sign Up
-								</a>
+								</Link>
 							</p>
 						</form>
 					</div>
