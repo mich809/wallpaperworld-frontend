@@ -33,6 +33,7 @@ const Latest = () => {
 									src={picture.pictureUrl}
 									url={picture.pictureName}
 									alt=""
+									key={index}
 								/>
 							))}
 						</ul>
