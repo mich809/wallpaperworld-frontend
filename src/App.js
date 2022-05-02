@@ -1,13 +1,16 @@
-import Home from "./pages/Home/Home";
-import Random from "./pages/Random";
-import Latest from "./pages/Latest";
-import TopList from "./pages/TopList";
-import Upload from "./pages/Upload";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Search from "./pages/Search";
-import Wallpaper from "./pages/Wallpaper";
-import Profile from "./pages/Profile";
+import {
+	Home,
+	Random,
+	Latest,
+	Upload,
+	TopList,
+	Register,
+	Login,
+	Profile,
+	Wallpaper,
+	Search,
+} from "./components/exporter";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RequireAuth from "./context/RequireAuth";
 
