@@ -135,7 +135,9 @@ const Wallpaper = () => {
 	}, [picName]);
 
 	const favoritePicture = () => {
-		addToFavorites(picName["id"])
+		let pictureName = picName["id"];
+
+		addToFavorites(pictureName)
 			.then((response) => {
 				console.log(response);
 			})
