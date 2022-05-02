@@ -1,7 +1,6 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8080";
-axios.defaults.headers.common["Authorization"] = localStorage.getItem("jwt");
 
 export const getHomePictures = async () =>
 	await axios
@@ -35,15 +34,10 @@ export const getPicturesByTag = async (tag) =>
 			console.log(error.response.data);
 		});
 
-export const getRandomPictures = async () =>
-	await axios
-		.get("/api/picture/getRandomPictures", { params: { pageNumber: 0 } })
-		.then(function (response) {
-			return response.data;
-		})
-		.catch(function (error) {
-			console.log(error.response.data);
-		});
+export const getRandomPictures = async (pageNumber) =>
+	await axios.get("/api/picture/getRandomPictures", {
+		params: { pageNumber: pageNumber },
+	});
 
 export const getLatestPictures = async () =>
 	await axios
@@ -54,3 +48,10 @@ export const getLatestPictures = async () =>
 		.catch(function (error) {
 			console.log(error.response.data);
 		});
+
+export const uploadPicture = async (formdata) =>
+	axios.post("http://localhost:8080/api/picture/addPicture", formdata, {
+		headers: {
+			Authorization: "Bearer " + localStorage.getItem("token"),
+		},
+	});
