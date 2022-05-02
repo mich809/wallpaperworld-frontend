@@ -1,11 +1,8 @@
 import SearchNavBar from "../components/Commons/SearchNavBar";
 import styled from "styled-components";
-import React, { useState } from "react";
-import { FilePond, registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import React, { useState, useRef } from "react";
+import { uploadPicture } from "../utils/PictureApi";
+import { useNavigate } from "react-router-dom";
 
 const Main = styled.main`
 	min-height: 100vh;
@@ -39,10 +36,25 @@ const Main = styled.main`
 	}
 `;
 
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
-
 const Upload = () => {
-	const [file, setFile] = useState([]);
+	const [selectedImage, setSelectedImage] = useState(null);
+	const [errorMessage, setErrorMessage] = useState("");
+	const errRef = useRef();
+	const navigate = useNavigate();
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		let formData = new FormData();
+		formData.append("file", selectedImage, selectedImage.name);
+		formData.append("tags", "batman");
+		uploadPicture(formData)
+			.then((response) => {
+				navigate(`/wallpaper/${response.data.pictureName}`);
+			})
+			.catch((err) => {
+				setErrorMessage("Something went wrong! try again!");
+			});
+	};
 
 	return (
 		<>
@@ -52,29 +64,40 @@ const Upload = () => {
 					<h1>𝕎𝕒𝕝𝕝ℙ𝕒𝕡𝕖𝕣𝕎𝕠𝕣𝕝𝕕</h1>
 					<h2>Wallpaper Upload</h2>
 					<div>
-						<FilePond
-							files={file}
-							onupdatefiles={setFile}
-							allowMultiple={false}
-							maxFiles={1}
-							name="file"
-							labelIdle="Drag & Drop your file or click to browse"
-							allowBrowse={true}
-							instantUpload={false}
-							server={{
-								process: {
-									url: "http://localhost:8080/api/picture/addPicture",
-									headers: {
-										Authorization: "Bearer " + localStorage.getItem("token"),
-									},
-									ondata: (formData) => {
-										formData.append("file", file);
-										formData.append("tags", "batman");
-										return formData;
-									},
-								},
-							}}
-						/>
+						<div>
+							{selectedImage && (
+								<div>
+									<img
+										alt="not found"
+										width={"60%"}
+										src={URL.createObjectURL(selectedImage)}
+									/>
+									<br />
+									<button onClick={() => setSelectedImage(null)}>Remove</button>
+								</div>
+							)}
+							<br />
+
+							<br />
+						</div>
+						<form onSubmit={handleSubmit}>
+							<input
+								type="file"
+								name="myImage"
+								onChange={(event) => {
+									setSelectedImage(event.target.files[0]);
+								}}
+								accept="image/jpeg,image/png"
+							/>
+
+							<button disabled={!selectedImage}>upload</button>
+						</form>
+						<p
+							ref={errRef}
+							className={errorMessage ? "errorMessage" : "offscreen"}
+						>
+							{errorMessage}
+						</p>
 					</div>
 				</div>
 			</Main>
