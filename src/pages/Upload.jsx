@@ -49,7 +49,8 @@ const Upload = () => {
 		formData.append("tags", "batman");
 		uploadPicture(formData)
 			.then((response) => {
-				navigate(`/wallpaper/${response.data.pictureName}`);
+				console.log(response.data);
+				navigate(`/wallpaper/${response.data.name}`);
 			})
 			.catch((err) => {
 				setErrorMessage("Something went wrong! try again!");
