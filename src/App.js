@@ -23,14 +23,13 @@ function App() {
 				<Route path="/toplist" element={<TopList />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/login" element={<Login />} />
-				<Route path="/profile" element={<Profile />} />
-
 				<Route path="/wallpaper/:id" element={<Wallpaper />} />
 				<Route path="/search/:tag" element={<Search />} />
 				<Route path="/" element={<Home />} />
 
 				<Route element={<RequireAuth />}>
 					<Route path="/upload" element={<Upload />} />
+					<Route path="/profile/:username" element={<Profile />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
