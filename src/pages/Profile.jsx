@@ -1,8 +1,9 @@
 import React from "react";
 import SearchNavBar from "../components/Commons/SearchNavBar";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserInfo } from "../utils/UserApi";
+import Picture from "../components/Commons/Picture";
 
 export const Container = styled.main`
 	position: relative;
@@ -68,15 +69,25 @@ export const Container = styled.main`
 `;
 
 const Profile = () => {
+	const [user, setUser] = useState({});
+	const [favoritePics, setFavoritePics] = useState([]);
+	const [uploadedPics, setUploadedPics] = useState([]);
+
+	function formatDate(string) {
+		var options = { year: "numeric", month: "long", day: "numeric" };
+		return new Date(string).toLocaleDateString([], options);
+	}
 	useEffect(() => {
 		getUserInfo()
 			.then((response) => {
-				console.log(response.data);
+				setUser(response.data);
+				setFavoritePics(response.data.favoritePictures);
+				setUploadedPics(response.data.pictures);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	});
+	}, []);
 
 	return (
 		<>
@@ -85,22 +96,40 @@ const Profile = () => {
 				<div className="content">
 					<div className="profile-box">
 						<h2>User's Information</h2>
-						<dl>
-							<dt>Last Active:</dt>
-							<dd>3 seconds ago</dd>
+						<dl style={{ marginTop: "1.5em" }}>
 							<dt>Joined:</dt>
-							<dd>3 weeks ago</dd>
+							<dd>{formatDate(user.date)}</dd>
 							<dt>Uploads:</dt>
-							<dd>3 seconds ago</dd>
+							<dd>{user.uploadedPicsCount}</dd>
 							<dt>Favorites:</dt>
-							<dd>3 seconds ago</dd>
+							<dd>{user.favoritePicsCount}</dd>
 						</dl>
 					</div>
 					<div className="profile-box">
 						<h2>User's Favorites</h2>
+						{favoritePics.map((pic, index) => (
+							<Picture
+								src={pic.pictureUrl}
+								url={pic.name}
+								alt=""
+								key={index}
+								height="100px"
+								width="200px"
+							/>
+						))}
 					</div>
 					<div className="profile-box">
 						<h2>User's Uploads</h2>
+						{uploadedPics.map((pic, index) => (
+							<Picture
+								src={pic.pictureUrl}
+								url={pic.name}
+								alt=""
+								key={index}
+								height="100px"
+								width="200px"
+							/>
+						))}
 					</div>
 				</div>
 			</Container>
