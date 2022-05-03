@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const StyledHeader = styled.header`
 	display: flex;
@@ -40,9 +43,9 @@ const StyledItem = styled.li`
 	padding: 0px 30px;
 `;
 
-const StyledAnchor = styled.a`
-	background-color: ${(props) => props.Backgroundcolor};
-	color: ${(props) => props.Textcolor};
+const StyledAnchor = styled(Link)`
+	background-color: ${(props) => props.backgroundcolor};
+	color: ${(props) => props.textcolor};
 	text-shadow: none;
 	display: inline-block;
 	margin: 0.2em 0.25em;
@@ -110,6 +113,14 @@ const UserPanel = styled.div`
 `;
 
 function SearchNavBar() {
+	let navigate = useNavigate();
+	const [input, setInput] = useState("");
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+		navigate("/search/" + input);
+	};
+
 	function logout() {
 		localStorage.removeItem("user");
 		localStorage.removeItem("token");
@@ -120,65 +131,62 @@ function SearchNavBar() {
 			<div>
 				<ul>
 					<StyledItem color="#ddd">
-						<a href="/">𝕎𝕒𝕝𝕝ℙ𝕒𝕡𝕖𝕣𝕎𝕠𝕣𝕝𝕕</a>
+						<Link to="/">𝕎𝕒𝕝𝕝ℙ𝕒𝕡𝕖𝕣𝕎𝕠𝕣𝕝𝕕</Link>
 					</StyledItem>
 					<StyledItem color="#ad3">
-						<a href="/latest">Latest</a>
+						<Link to="/latest">Latest</Link>
 					</StyledItem>
 					<StyledItem color="#b760f0">
 						{" "}
-						<a href="/toplist">TopList</a>
+						<Link to="/toplist">TopList</Link>
 					</StyledItem>
 					<StyledItem color="#e73">
 						{" "}
-						<a href="/random">Random</a>
+						<Link to="/random">Random</Link>
 					</StyledItem>
 					<StyledItem color="#d55">
 						{" "}
-						<a href="/upload">Upload</a>
+						<Link to="/upload">Upload</Link>
 					</StyledItem>
 				</ul>
 			</div>
-			<FormStyle>
+			<FormStyle onSubmit={submitHandler}>
 				<div>
-					<input placeholder="Search..." />
+					<input
+						placeholder="Search..."
+						type="text"
+						value={input}
+						onChange={(e) => setInput(e.target.value)}
+					/>
 				</div>
 			</FormStyle>
 
 			<UserPanel>
 				{!localStorage.getItem("user") && (
-					<StyledAnchor
-						href="/register"
-						Backgroundcolor="#d55"
-						Textcolor="#ddd"
-					>
+					<StyledAnchor to="/register" backgroundcolor="#d55" textcolor="#ddd">
 						Register
 					</StyledAnchor>
 				)}
 				{!localStorage.getItem("user") && (
-					<StyledAnchor
-						href="/login"
-						Backgroundcolor="#204650"
-						Textcolor="#ddd"
-					>
+					<StyledAnchor to="/login" backgroundcolor="#204650" textcolor="#ddd">
 						Login
 					</StyledAnchor>
 				)}
 				{localStorage.getItem("user") && (
 					<StyledAnchor
-						href="/profile"
-						Backgroundcolor="#204650"
-						Textcolor="#ddd"
+						to={`/profile/${localStorage.getItem("user")}`}
+						backgroundcolor="#d55"
+						textcolor="#ddd"
 					>
 						Profile
 					</StyledAnchor>
 				)}
 				{localStorage.getItem("user") && (
 					<StyledAnchor
-						href="/login"
-						Backgroundcolor="#204650"
-						Textcolor="#ddd"
+						to="/login"
 						onClick={logout}
+						backgroundcolor="#204650"
+						textcolor="#ddd"
 					>
 						logout
 					</StyledAnchor>
