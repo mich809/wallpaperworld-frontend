@@ -9,6 +9,7 @@ const Latest = () => {
 	const [pictures, setPictures] = useState([]);
 	useEffect(() => {
 		getLatestPictures().then((pics) => {
+			console.log(pics.content);
 			setPictures(pics.content);
 		});
 	}, []);
@@ -31,7 +32,7 @@ const Latest = () => {
 							{pictures.map((picture, index) => (
 								<Picture
 									src={picture.pictureUrl}
-									url={picture.pictureName}
+									url={picture.name}
 									alt=""
 									key={index}
 								/>
