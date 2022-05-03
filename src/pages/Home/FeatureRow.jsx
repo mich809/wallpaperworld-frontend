@@ -79,14 +79,15 @@ const StatsRow = styled.div`
 function FeatRow({ pics, nums }) {
 	return (
 		<>
+			{pics.length <= 0 && (
+				<h1 style={{ fontSize: "2em", color: "#ddd" }}>
+					No pics yet, maybe you should upload some?
+				</h1>
+			)}
 			{pics.slice(nums[0], nums[1]).map((picture) => (
 				<PictureRow key={picture.id}>
 					<span>
-						<Picture
-							src={picture.pictureUrl}
-							url={picture.pictureName}
-							alt=""
-						/>
+						<Picture src={picture.pictureUrl} url={picture.name} alt="" />
 					</span>
 				</PictureRow>
 			))}
@@ -135,15 +136,19 @@ function FeatureRow() {
 	const [pictures, setPictures] = useState([]);
 
 	useEffect(() => {
-		getHomePictures().then((pics) => {
-			setPictures(pics);
-		});
+		getHomePictures()
+			.then((response) => {
+				setPictures(response);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}, []);
 
 	return (
 		<FeatureContainer>
 			<FeatRow pics={pictures} nums={[0, 4]} />
-			<SignUpRow></SignUpRow>
+			<SignUpRow />
 			<FeatRow pics={pictures} nums={[4, pictures.length]} />
 			<Stats />
 		</FeatureContainer>
