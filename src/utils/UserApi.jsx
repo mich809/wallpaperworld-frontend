@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// axios.defaults.headers.common["Authorization"] = "BelocalStorage.getItem("token");
-
 export const registerUser = async (user) =>
 	await axios.post("/api/user/register", user);
 
@@ -11,11 +9,13 @@ export const login = async (user) =>
 		password: user.password,
 	});
 
-export const addToFavorites = async (picture) =>
+export const addToFavorites = async (name) =>
 	await axios.put(
-		"/api/user/AddToFavorites",
-		{ param: { pictureName: picture } },
-		{ headers: { Authorization: "Bearer " + localStorage.getItem("token") } }
+		`/api/user/AddToFavorites?name=${name}`,
+		{ param: { name: name } },
+		{
+			headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+		}
 	);
 
 export const removeFromFavorites = async (pictureID) =>

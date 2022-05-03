@@ -8,19 +8,10 @@ export const getHomePictures = async () =>
 		.then(function (response) {
 			return response.data;
 		})
-		.catch(function (error) {
-			console.log(error.response.data);
-		});
+		.catch(function (error) {});
 
 export const getPictureDetails = async (pictureName) =>
-	await axios
-		.get("/api/picture/getPictureDetails", { params: { title: pictureName } })
-		.then(function (response) {
-			return response.data;
-		})
-		.catch(function (error) {
-			console.log(error.response.data);
-		});
+	await axios.get(`/api/picture/getPictureDetails?title=${pictureName}`);
 
 export const getPicturesByTag = async (tag) =>
 	await axios
@@ -30,9 +21,7 @@ export const getPicturesByTag = async (tag) =>
 		.then(function (response) {
 			return response.data;
 		})
-		.catch(function (error) {
-			console.log(error.response.data);
-		});
+		.catch(function (error) {});
 
 export const getRandomPictures = async (pageNumber) =>
 	await axios.get("/api/picture/getRandomPictures", {
@@ -45,9 +34,7 @@ export const getLatestPictures = async () =>
 		.then(function (response) {
 			return response.data;
 		})
-		.catch(function (error) {
-			console.log(error.response.data);
-		});
+		.catch(function (error) {});
 
 export const uploadPicture = async (formdata) =>
 	axios.post("http://localhost:8080/api/picture/addPicture", formdata, {
