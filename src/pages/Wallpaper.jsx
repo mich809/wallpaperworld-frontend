@@ -129,15 +129,16 @@ const Wallpaper = () => {
 
 	useEffect(() => {
 		getPictureDetails(picName["id"]).then((pic) => {
-			setPicture(pic);
-			setTags(pic.tags);
+			setPicture(pic.data);
+			console.log(pic.data);
+			setTags(pic.data.tags);
 		});
 	}, [picName]);
 
 	const favoritePicture = () => {
-		let pictureName = picName["id"];
-
-		addToFavorites(pictureName)
+		let Name = picName["id"];
+		console.log(Name);
+		addToFavorites(Name)
 			.then((response) => {
 				console.log(response);
 			})
@@ -163,7 +164,7 @@ const Wallpaper = () => {
 						>
 							{Tag.map((tag, index) => (
 								<TagItem key={index}>
-									<Link to="/#">{tag}</Link>
+									<Link to={`/search/${tag}`}>{tag}</Link>
 								</TagItem>
 							))}
 						</ul>
