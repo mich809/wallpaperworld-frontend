@@ -36,8 +36,9 @@ function Search() {
 							{pictures.map((picture, index) => (
 								<Picture
 									src={picture.pictureUrl}
-									url={picture.pictureName}
+									url={picture.name}
 									alt=""
+									key={index}
 								/>
 							))}
 						</ul>
