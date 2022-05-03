@@ -59,7 +59,9 @@ const Random = () => {
 								dataLength={pictures.length}
 								next={fetchData}
 								hasMore={hasMore}
-								loader={<h4>Loading...</h4>}
+								loader={
+									<h4 style={{ fontSize: "2em", color: "#ddd" }}>Loading...</h4>
+								}
 								endMessage={
 									<p style={{ textAlign: "center" }}>
 										<b>Yay! You have seen it all</b>
@@ -69,7 +71,7 @@ const Random = () => {
 								{pictures.map((picture, index) => (
 									<Picture
 										src={picture.pictureUrl}
-										url={picture.pictureName}
+										url={picture.name}
 										alt=""
 										key={index}
 									/>
