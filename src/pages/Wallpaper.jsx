@@ -130,7 +130,6 @@ const Wallpaper = () => {
 	useEffect(() => {
 		getPictureDetails(picName["id"]).then((pic) => {
 			setPicture(pic.data);
-			console.log(pic.data);
 			setTags(pic.data.tags);
 		});
 	}, [picName]);
