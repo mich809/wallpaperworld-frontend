@@ -48,7 +48,13 @@ const Random = () => {
 			<Container>
 				<header>
 					<h1>
-						<FaRandom style={{ margin: "20 20 0 25", fontSize: "1.5em" }} />
+						<FaRandom
+							style={{
+								margin: "20 20 0 25",
+								fontSize: "1.5em",
+								color: "#e73",
+							}}
+						/>
 						Random
 					</h1>
 				</header>
