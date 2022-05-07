@@ -9,6 +9,9 @@ import {
 	Profile,
 	Wallpaper,
 	Search,
+	Admin,
+	Users,
+	Pictures,
 } from "./components/exporter";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -30,6 +33,10 @@ function App() {
 				<Route element={<RequireAuth />}>
 					<Route path="/upload" element={<Upload />} />
 					<Route path="/profile/:username" element={<Profile />} />
+					<Route path="/admin" element={<Admin />}>
+						<Route path="Users" element={<Users />} />
+						<Route path="Pictures" element={<Pictures />} />
+					</Route>
 				</Route>
 			</Routes>
 		</BrowserRouter>
