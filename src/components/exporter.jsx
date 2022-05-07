@@ -14,3 +14,6 @@ export { default as Register } from "../pages/Register";
 export { default as TopList } from "../pages/TopList";
 export { default as Wallpaper } from "../pages/Wallpaper";
 export { default as Search } from "../pages/Search";
+export { default as Admin } from "../pages/Admin/Admin";
+export { default as Users } from "../pages/Admin/Users";
+export { default as Pictures } from "../pages/Admin/Pictures";
