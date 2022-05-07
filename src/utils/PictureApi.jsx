@@ -28,9 +28,21 @@ export const getRandomPictures = async (pageNumber) =>
 		params: { pageNumber: pageNumber },
 	});
 
-export const getLatestPictures = async () =>
+export const getLatestPictures = async (pageNumber) =>
 	await axios
-		.get("/api/picture/getPicturesByDate", { params: { pageNumber: 0 } })
+		.get("/api/picture/getPicturesByDate", {
+			params: { pageNumber: pageNumber },
+		})
+		.then(function (response) {
+			return response.data;
+		})
+		.catch(function (error) {});
+
+export const getTopPictures = async (pageNumber) =>
+	await axios
+		.get("/api/picture/getPicturesByFavorites", {
+			params: { pageNumber: pageNumber },
+		})
 		.then(function (response) {
 			return response.data;
 		})
@@ -41,4 +53,9 @@ export const uploadPicture = async (formdata) =>
 		headers: {
 			Authorization: "Bearer " + localStorage.getItem("token"),
 		},
+	});
+
+export const getPicturesNeedingApproval = async (page) =>
+	await axios.get("/api/picture/PictureApproval", {
+		params: { pageNumber: page },
 	});
