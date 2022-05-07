@@ -13,10 +13,13 @@ function Search() {
 
 	useEffect(() => {
 		getPicturesByTag(tag).then((pics) => {
-			setPictures(pics.content);
-			setAmout(pics.totalElements);
+			const result = pics.content.filter(
+				(picture) => picture.approved === true
+			);
+			setPictures(result);
+			setAmout(result.length > 0 ? result.length : 0);
 		});
-	});
+	}, [tag]);
 
 	return (
 		<>
