@@ -13,6 +13,7 @@ const Container = styled.div`
 	padding: 30px 30px 5px;
 	text-align: center;
 	height: 100vh;
+
 	background: url(${primaryBackground}) top center/cover no-repeat fixed,
 		#171717 url(${secondaryBackground}) top left repeat;
 `;
